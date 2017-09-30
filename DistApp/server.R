@@ -31,7 +31,7 @@ function(input, output, session) {
       data <- SLdist2L[,c("Male", "Female")]
     } else if (input$prods == "Ethinicity") {
       data <- SLdist2L[, c("Sinhalese", "Tamils", "IndianTamils", "Muslims", "OtherEthGR")]
-    } else if (input$prods == "Relious") {
+    } else if (input$prods == "Religion") {
       data <- SLdist2L[, c("Buddhist", "Hindu", "Islam", "Christians", "OtherReligGR")]
     }
 
