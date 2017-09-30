@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demographic Information of Sri Lanka</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Demographic Information of Sri Lanka">
+  <meta name="author" content="S. Sarmilan">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Demographic Information of Sri Lanka</h1>
+    <h2>Course Project - Shiny Application and Reproducible Pitch</h2>
+    <p>S. Sarmilan<br/></p>
+  </hgroup>
+    <a href="https://github.com/Sarmilan-Siva/Data_Product_Course_Project/zipball/gh-pages" class="example">
+     Download
+    </a>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Objective</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Main objective of this Shiny App is to show Sri Lankan demographic information such as Sex, Ethinicity and Religion district wise in the Sri Lankan map.</p>
+
+<p>Pie chart is used to visualize multiple variables associated to district level geographical coordinates of Sri Lanka, as follows:</p>
+
+<ol>
+<li>Sex - Male, Female</li>
+<li>Ethinicity - Sinhalese, Tamils, IndianTamils, Muslims, Other Ethinic Groups</li>
+<li>Religion - Buddhist, Hindu, Islam, Christians, Other Religious Groups</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Data Sources and Preprocessing</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Data was taken from the Humanitarian Data Exchange (HDX), which is an open platform for sharing data. This dataset include Sri Lanka census of population and housing 2012 with demographic information up to GND (4th Admin) level.</p>
+
+<p>The data was pre-processed to:</p>
+
+<ol>
+<li>Get district (2nd Admin) level summary.</li>
+<li>Find latitude and longitude of the districts using <code>ggmap</code> package.</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Sample Code</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Sample output is plotted for the <code>Northern</code> provience for <code>Ethinicity</code>.</p>
+
+<pre><code class="r">library(leaflet)
+library(leaflet.minicharts)
+
+SLdist2L &lt;- read.csv(&quot;../data/SLdist2L.csv&quot;)
+SLnort &lt;- SLdist2L[which(SLdist2L$PROVINCE_N == &quot;Northern&quot;),]
+
+MapN &lt;- leaflet() %&gt;%
+  addProviderTiles(providers$OpenStreetMap.HOT) %&gt;%
+  addMinicharts(
+        SLnort$lon, SLnort$lat,
+        chartdata = SLnort[,c(&quot;Sinhalese&quot;, &quot;Tamils&quot;, &quot;IndianTamils&quot;, &quot;Muslims&quot;, &quot;OtherEthGR&quot;)],
+        type = &quot;pie&quot;, showLabels = TRUE,
+        layerId = SLnort$DISTRICT_N,
+        opacity = 0.8, colorPalette = c(&quot;#082d17&quot;, &quot;#1b6337&quot;, &quot;#36bc6a&quot;, &quot;#57e58e&quot;, &quot;#7c847f&quot;),
+        width = 80 * sqrt(SLnort$Pop) / sqrt(max(SLnort$Pop)), transitionTime = 0)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Map with Charts</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Objective'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Data Sources and Preprocessing'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Sample Code'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Map with Charts'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
